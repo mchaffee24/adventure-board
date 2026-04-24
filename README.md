@@ -4,7 +4,7 @@
 
 ## Author
 
-Mitchell Chaffee - [GitHub profile](https://github.com/YOUR-GITHUB-USERNAME)
+Mitchell Chaffee - [GitHub profile](https://github.com/mchaffee24)
 
 ## User Story
 
@@ -81,14 +81,12 @@ This function matters because it turns user input into structured JSON, saves it
 
 ## Validation
 
-- Nu Validator: https://validator.w3.org/nu/?doc=https%3A%2F%2FYOUR-GITHUB-USERNAME.github.io%2Fadventure-board%2F
-- WAVE accessibility report: https://wave.webaim.org/report#/https://YOUR-GITHUB-USERNAME.github.io/adventure-board/
-
-Replace `YOUR-GITHUB-USERNAME` after GitHub Pages is enabled.
+- Nu Validator: https://validator.w3.org/nu/?doc=https%3A%2F%2Fmchaffee24.github.io%2Fadventure-board%2F
+- WAVE accessibility report: https://wave.webaim.org/report#/https://mchaffee24.github.io/adventure-board/
 
 ## Future Improvements
 
-Sprint 99 milestone: https://github.com/YOUR-GITHUB-USERNAME/adventure-board/milestone/1
+Sprint 99 milestone: https://github.com/mchaffee24/adventure-board/milestone/1
 
 Planned issues for Sprint 99:
 
@@ -102,7 +100,8 @@ Each issue should be assigned to Mitchell Chaffee and include a short descriptio
 
 ## Deployment Notes
 
-- GitHub Pages app: https://YOUR-GITHUB-USERNAME.github.io/adventure-board/
+- Repository: https://github.com/mchaffee24/adventure-board
+- GitHub Pages app: https://mchaffee24.github.io/adventure-board/
 - GCP external IP app: http://YOUR-GCP-EXTERNAL-IP/
 
 Add both links to the repository About section, along with the project topics.

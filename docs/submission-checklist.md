@@ -17,8 +17,8 @@ Use this after pushing the project to GitHub.
 
 > A clean front-end planner for filtering adventure ideas and saving a session-based itinerary.
 
-Repository: https://github.com/YOUR-GITHUB-USERNAME/adventure-board
-Live app: https://YOUR-GITHUB-USERNAME.github.io/adventure-board/
+Repository: https://github.com/mchaffee24/adventure-board
+Live app: https://mchaffee24.github.io/adventure-board/
 ```
 
 ## Sprint 99 Milestone Ideas
@@ -31,5 +31,5 @@ Live app: https://YOUR-GITHUB-USERNAME.github.io/adventure-board/
 
 ## Validation Links
 
-- Nu Validator: https://validator.w3.org/nu/?doc=https%3A%2F%2FYOUR-GITHUB-USERNAME.github.io%2Fadventure-board%2F
-- WAVE: https://wave.webaim.org/report#/https://YOUR-GITHUB-USERNAME.github.io/adventure-board/
+- Nu Validator: https://validator.w3.org/nu/?doc=https%3A%2F%2Fmchaffee24.github.io%2Fadventure-board%2F
+- WAVE: https://wave.webaim.org/report#/https://mchaffee24.github.io/adventure-board/
