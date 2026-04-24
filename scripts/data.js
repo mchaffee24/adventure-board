@@ -1,9 +1,66 @@
-export async function fetchAdventures() {
-  const response = await fetch("./data/adventures.json");
+export async function fetchSeedTransactions() {
+  const response = await fetch("./data/transactions.json");
 
   if (!response.ok) {
-    throw new Error(`Adventure data failed to load: ${response.status}`);
+    throw new Error(`Transaction data failed to load: ${response.status}`);
   }
 
   return response.json();
 }
+
+export const categoryDetails = {
+  bills: {
+    label: "Bills",
+    icon: "bi-receipt",
+    color: "#4169a8",
+    budget: 220
+  },
+  entertainment: {
+    label: "Entertainment",
+    icon: "bi-controller",
+    color: "#b14d8d",
+    budget: 90
+  },
+  food: {
+    label: "Food",
+    icon: "bi-cup-hot",
+    color: "#d95f43",
+    budget: 160
+  },
+  gas: {
+    label: "Gas",
+    icon: "bi-fuel-pump",
+    color: "#d8a12d",
+    budget: 130
+  },
+  groceries: {
+    label: "Groceries",
+    icon: "bi-basket",
+    color: "#4f7f52",
+    budget: 240
+  },
+  health: {
+    label: "Health",
+    icon: "bi-heart-pulse",
+    color: "#1f7a7a",
+    budget: 80
+  },
+  income: {
+    label: "Income",
+    icon: "bi-cash-stack",
+    color: "#2f8a5b",
+    budget: 0
+  },
+  school: {
+    label: "School",
+    icon: "bi-mortarboard",
+    color: "#7057b8",
+    budget: 100
+  },
+  transportation: {
+    label: "Transportation",
+    icon: "bi-car-front",
+    color: "#59738f",
+    budget: 110
+  }
+};

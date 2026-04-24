@@ -1,5 +1,6 @@
-const USER_KEY = "adventureBoardUser";
-const ITINERARY_KEY = "adventureBoardItinerary";
+const USER_KEY = "spendSignalUser";
+const TRANSACTION_KEY = "spendSignalTransactions";
+const SETTINGS_KEY = "spendSignalSettings";
 
 export function getCurrentUser() {
   return sessionStorage.getItem(USER_KEY);
@@ -13,47 +14,47 @@ export function clearCurrentUser() {
   sessionStorage.removeItem(USER_KEY);
 }
 
-export function getItinerary() {
-  const saved = sessionStorage.getItem(ITINERARY_KEY);
-  return saved ? JSON.parse(saved) : [];
+export function getSavedTransactions() {
+  const saved = sessionStorage.getItem(TRANSACTION_KEY);
+  return saved ? JSON.parse(saved) : null;
 }
 
-export function saveItinerary(items) {
-  sessionStorage.setItem(ITINERARY_KEY, JSON.stringify(items));
+export function saveTransactions(transactions) {
+  sessionStorage.setItem(TRANSACTION_KEY, JSON.stringify(transactions));
 }
 
-export function upsertItineraryItem(item) {
-  const items = getItinerary();
-  const existingIndex = items.findIndex((savedItem) => savedItem.id === item.id);
+export function upsertTransaction(transaction) {
+  const transactions = getSavedTransactions() || [];
+  const index = transactions.findIndex((item) => item.id === transaction.id);
 
-  if (existingIndex >= 0) {
-    items.splice(existingIndex, 1, item);
+  if (index >= 0) {
+    transactions.splice(index, 1, transaction);
   } else {
-    items.push(item);
+    transactions.push(transaction);
   }
 
-  saveItinerary(items);
-  return items;
+  saveTransactions(transactions);
+  return transactions;
 }
 
-export function removeItineraryItem(itemId) {
-  const items = getItinerary().filter((item) => item.id !== itemId);
-  saveItinerary(items);
-  return items;
+export function removeTransaction(transactionId) {
+  const transactions = (getSavedTransactions() || []).filter((item) => item.id !== transactionId);
+  saveTransactions(transactions);
+  return transactions;
 }
 
-export function toggleItineraryItem(itemId) {
-  const items = getItinerary().map((item) => {
-    if (item.id !== itemId) {
-      return item;
-    }
+export function getSettings() {
+  const saved = sessionStorage.getItem(SETTINGS_KEY);
 
-    return {
-      ...item,
-      complete: !item.complete
-    };
-  });
+  return saved
+    ? JSON.parse(saved)
+    : {
+        startingBalance: 725,
+        weeklyIncome: 210,
+        weeklyGoal: 125
+      };
+}
 
-  saveItinerary(items);
-  return items;
+export function saveSettings(settings) {
+  sessionStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
 }

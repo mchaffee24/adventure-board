@@ -13,9 +13,9 @@ Use this after pushing the project to GitHub.
 ```md
 ## Featured Project
 
-### Adventure Board
+### Spend Signal
 
-> A clean front-end planner for filtering adventure ideas and saving a session-based itinerary.
+> A student budget dashboard that tracks spending categories, warning signals, charts, and cash runway.
 
 Repository: https://github.com/mchaffee24/adventure-board
 Live app: https://mchaffee24.github.io/adventure-board/
@@ -23,11 +23,11 @@ Live app: https://mchaffee24.github.io/adventure-board/
 
 ## Sprint 99 Milestone Ideas
 
-- Add export to downloadable JSON
-- Add drag-and-drop itinerary ordering
-- Add saved theme preference
-- Improve empty states for validation failures
-- Add unit tests for storage helpers
+- Add downloadable CSV and JSON export
+- Add recurring transaction templates
+- Add category budget editing controls
+- Add month selector for older transaction sets
+- Add automated tests for forecast and alert helpers
 
 ## Validation Links
 

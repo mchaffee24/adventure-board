@@ -11,9 +11,9 @@ Add a `README.md` file with this featured project section:
 ```md
 ## Featured Project
 
-### Adventure Board
+### Spend Signal
 
-> A clean front-end planner for filtering adventure ideas and saving a session-based itinerary.
+> A student budget dashboard that tracks spending categories, warning signals, charts, and cash runway.
 
 Repository: https://github.com/mchaffee24/adventure-board
 Live app: https://mchaffee24.github.io/adventure-board/

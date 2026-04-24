@@ -1,7 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Adventure Board compass mark">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Spend Signal activity mark">
   <rect width="64" height="64" rx="8" fill="#17212b"/>
-  <circle cx="32" cy="32" r="21" fill="#d8a12d"/>
-  <path d="M42 18 35 36 22 46 29 28z" fill="#1f7a7a"/>
-  <path d="M29 28 42 18 35 36z" fill="#ffffff" opacity=".92"/>
-  <circle cx="32" cy="32" r="4" fill="#17212b"/>
+  <circle cx="32" cy="32" r="22" fill="#1f7a7a"/>
+  <path d="M15 36h8l5-12 8 20 6-14h7" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="49" cy="30" r="4" fill="#d8a12d"/>
 </svg>

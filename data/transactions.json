@@ -1,0 +1,200 @@
+[
+  {
+    "id": "seed-001",
+    "date": "2026-04-01",
+    "merchant": "Campus Coffee",
+    "category": "food",
+    "amount": 8.75,
+    "type": "expense",
+    "note": "Breakfast before class"
+  },
+  {
+    "id": "seed-002",
+    "date": "2026-04-02",
+    "merchant": "Shell",
+    "category": "gas",
+    "amount": 34.12,
+    "type": "expense",
+    "note": "Weekly fill-up"
+  },
+  {
+    "id": "seed-003",
+    "date": "2026-04-03",
+    "merchant": "Paycheck",
+    "category": "income",
+    "amount": 420,
+    "type": "income",
+    "note": "Part-time job"
+  },
+  {
+    "id": "seed-004",
+    "date": "2026-04-04",
+    "merchant": "Grocery Market",
+    "category": "groceries",
+    "amount": 63.44,
+    "type": "expense",
+    "note": "Meal prep supplies"
+  },
+  {
+    "id": "seed-005",
+    "date": "2026-04-05",
+    "merchant": "Movie Night",
+    "category": "entertainment",
+    "amount": 18.5,
+    "type": "expense",
+    "note": "Ticket and snack"
+  },
+  {
+    "id": "seed-006",
+    "date": "2026-04-07",
+    "merchant": "Campus Coffee",
+    "category": "food",
+    "amount": 11.25,
+    "type": "expense",
+    "note": "Study group"
+  },
+  {
+    "id": "seed-007",
+    "date": "2026-04-08",
+    "merchant": "UNA Bookstore",
+    "category": "school",
+    "amount": 27.99,
+    "type": "expense",
+    "note": "Notebook and pens"
+  },
+  {
+    "id": "seed-008",
+    "date": "2026-04-09",
+    "merchant": "Utility Split",
+    "category": "bills",
+    "amount": 72.8,
+    "type": "expense",
+    "note": "Apartment utilities"
+  },
+  {
+    "id": "seed-009",
+    "date": "2026-04-10",
+    "merchant": "Freelance Logo",
+    "category": "income",
+    "amount": 95,
+    "type": "income",
+    "note": "Small design job"
+  },
+  {
+    "id": "seed-010",
+    "date": "2026-04-11",
+    "merchant": "Taco Stand",
+    "category": "food",
+    "amount": 14.2,
+    "type": "expense",
+    "note": "Dinner after lab"
+  },
+  {
+    "id": "seed-011",
+    "date": "2026-04-12",
+    "merchant": "Shell",
+    "category": "gas",
+    "amount": 29.75,
+    "type": "expense",
+    "note": "Commute"
+  },
+  {
+    "id": "seed-012",
+    "date": "2026-04-13",
+    "merchant": "Grocery Market",
+    "category": "groceries",
+    "amount": 48.16,
+    "type": "expense",
+    "note": "Groceries"
+  },
+  {
+    "id": "seed-013",
+    "date": "2026-04-14",
+    "merchant": "Streaming Service",
+    "category": "entertainment",
+    "amount": 12.99,
+    "type": "expense",
+    "note": "Monthly subscription"
+  },
+  {
+    "id": "seed-014",
+    "date": "2026-04-15",
+    "merchant": "Campus Coffee",
+    "category": "food",
+    "amount": 22.4,
+    "type": "expense",
+    "note": "Coffee and lunch"
+  },
+  {
+    "id": "seed-015",
+    "date": "2026-04-16",
+    "merchant": "Paycheck",
+    "category": "income",
+    "amount": 420,
+    "type": "income",
+    "note": "Part-time job"
+  },
+  {
+    "id": "seed-016",
+    "date": "2026-04-17",
+    "merchant": "Pharmacy",
+    "category": "health",
+    "amount": 16.35,
+    "type": "expense",
+    "note": "Cold medicine"
+  },
+  {
+    "id": "seed-017",
+    "date": "2026-04-18",
+    "merchant": "Burger House",
+    "category": "food",
+    "amount": 19.8,
+    "type": "expense",
+    "note": "Weekend meal"
+  },
+  {
+    "id": "seed-018",
+    "date": "2026-04-19",
+    "merchant": "Auto Parts",
+    "category": "transportation",
+    "amount": 41.5,
+    "type": "expense",
+    "note": "Wiper blades"
+  },
+  {
+    "id": "seed-019",
+    "date": "2026-04-20",
+    "merchant": "Grocery Market",
+    "category": "groceries",
+    "amount": 57.02,
+    "type": "expense",
+    "note": "Groceries"
+  },
+  {
+    "id": "seed-020",
+    "date": "2026-04-21",
+    "merchant": "Taco Stand",
+    "category": "food",
+    "amount": 24.6,
+    "type": "expense",
+    "note": "Dinner with friends"
+  },
+  {
+    "id": "seed-021",
+    "date": "2026-04-22",
+    "merchant": "Shell",
+    "category": "gas",
+    "amount": 36.7,
+    "type": "expense",
+    "note": "Gas"
+  },
+  {
+    "id": "seed-022",
+    "date": "2026-04-23",
+    "merchant": "Campus Coffee",
+    "category": "food",
+    "amount": 17.9,
+    "type": "expense",
+    "note": "Project work session"
+  }
+]

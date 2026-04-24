@@ -4,9 +4,9 @@ Use these values in the GitHub repository settings for `mchaffee24/adventure-boa
 
 ## About Section
 
-- Description: `A clean front-end planner for filtering adventure ideas and saving a session-based itinerary.`
+- Description: `A student budget dashboard that tracks spending categories, warning signals, charts, and cash runway.`
 - Website: `https://mchaffee24.github.io/adventure-board/`
-- Topics: `front-end`, `javascript`, `bootstrap`, `github-pages`, `gcp`, `session-storage`
+- Topics: `front-end`, `javascript`, `bootstrap`, `github-pages`, `gcp`, `session-storage`, `budget-app`
 
 Add the GCP external IP link in the description or website field after the VM is live.
 
@@ -42,10 +42,10 @@ Sprint 99
 
 Suggested issues:
 
-- Add export to downloadable JSON
-- Add drag-and-drop itinerary ordering
-- Add saved theme preference
-- Improve empty states for validation failures
-- Add unit tests for storage helpers
+- Add downloadable CSV and JSON export
+- Add recurring transaction templates
+- Add category budget editing controls
+- Add month selector for older transaction sets
+- Add automated tests for forecast and alert helpers
 
 Assign each issue to `mchaffee24` and add clear descriptions.
