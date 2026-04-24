@@ -14,7 +14,7 @@ Mitchell Chaffee - [GitHub profile](https://github.com/mchaffee24)
 
 ## Narrative
 
-Spend Signal is a front-end spending analyzer for tracking everyday transactions. It loads seed transactions from JSON, stores changes in `sessionStorage`, lets the user add/edit/delete transactions, filters the ledger, and displays category charts, budget warnings, and a runway forecast.
+Spend Signal is a front-end spending analyzer for tracking everyday transactions. It starts with no personal spending history, loads neutral category configuration from JSON, stores user-entered changes in `sessionStorage`, lets the user add/edit/delete transactions, filters the ledger, and displays category charts, budget warnings, and a runway forecast.
 
 I chose this direction because a budget app feels practical while still giving the interface room to do meaningful work. The app does more than show static content: it calculates spending patterns, compares weeks, and packages new form data as JSON.
 
@@ -35,7 +35,7 @@ The development story focused on clarity over size. I built the app as a static 
 ├── assets
 │   └── favicon.svg
 ├── data
-│   └── transactions.json
+│   └── budget-config.json
 ├── docs
 │   ├── github-profile-readme.md
 │   ├── repo-settings.md
@@ -54,6 +54,13 @@ The development story focused on clarity over size. I built the app as a static 
 
 ```js
 function predictRunway(expenseTotal) {
+  if (!state.transactions.length) {
+    return {
+      dailyBurn: 0,
+      days: null
+    };
+  }
+
   const dayCount = Math.max(getActiveDayCount(), 1);
   const dailySpend = expenseTotal / dayCount;
   const dailyIncome = state.settings.weeklyIncome / 7;
@@ -74,7 +81,7 @@ function predictRunway(expenseTotal) {
 }
 ```
 
-This function matters because it turns transaction history and user settings into a real forecast. It estimates daily spending, subtracts daily income, includes the savings target, and predicts how many days the current balance can last. If income covers spending and the savings target, it reports a stable runway instead of a countdown.
+This function matters because it turns user-entered transaction history and settings into a real forecast. It waits until the user has entered spending data, estimates daily spending, subtracts daily income, includes the savings target, and predicts how many days the current balance can last. If income covers spending and the savings target, it reports a stable runway instead of a countdown.
 
 ## Validation
 

@@ -1,4 +1,4 @@
-import { categoryDetails, fetchSeedTransactions } from "./data.js";
+import { applyBudgetConfig, categoryDetails, fetchBudgetConfig } from "./data.js";
 import {
   clearCurrentUser,
   getCurrentUser,
@@ -35,7 +35,11 @@ const state = {
     category: "all",
     type: "all"
   },
-  settings: getSettings()
+  settings: {
+    startingBalance: 0,
+    weeklyIncome: 0,
+    weeklyGoal: 0
+  }
 };
 
 const elements = {
@@ -75,19 +79,23 @@ console.info(`Demo login: ${credentials.username} / ${credentials.password}`);
 init();
 
 async function init() {
-  populateCategoryControls();
   bindEvents();
   updateSessionUi();
-  applySettingsToForm();
 
   try {
+    const config = await fetchBudgetConfig();
+    applyBudgetConfig(config);
+    populateCategoryControls();
+    state.settings = getSettings(config.defaultSettings);
     const savedTransactions = getSavedTransactions();
-    state.transactions = savedTransactions || await fetchSeedTransactions();
+    state.transactions = savedTransactions.filter((transaction) => !String(transaction.id).startsWith("seed-"));
 
-    if (!savedTransactions) {
+    // Drop legacy class-demo records from the previous version without removing user-entered data.
+    if (state.transactions.length !== savedTransactions.length) {
       saveTransactions(state.transactions);
     }
 
+    applySettingsToForm();
     renderDashboard();
   } catch (error) {
     elements.transactionBody.replaceChildren();
@@ -243,12 +251,14 @@ function buildAnalysis() {
   const currentWeek = weeklyTotals.at(-1);
   const previousWeek = weeklyTotals.at(-2);
   const runway = predictRunway(expenseTotal);
-  const alerts = buildAlerts(categoryTotals, currentWeek, previousWeek, runway);
+  const hasTransactions = state.transactions.length > 0;
+  const alerts = buildAlerts(categoryTotals, currentWeek, previousWeek, runway, hasTransactions);
 
   return {
     alerts,
     categoryTotals,
     expenseTotal,
+    hasTransactions,
     incomeTotal,
     net,
     runway,
@@ -260,8 +270,8 @@ function renderSummary(analysis) {
   elements.monthlySpending.textContent = formatCurrency(analysis.expenseTotal);
   elements.monthlyIncome.textContent = formatCurrency(analysis.incomeTotal);
   elements.monthlyNet.textContent = formatCurrency(analysis.net);
-  elements.runway.textContent = analysis.runway.days === Infinity ? "Stable" : `${analysis.runway.days} days`;
-  elements.warningSummary.textContent = analysis.alerts[0]?.message || "Spending is currently inside your guardrails.";
+  elements.runway.textContent = formatRunway(analysis);
+  elements.warningSummary.textContent = analysis.alerts[0]?.message || "Add your first transaction to unlock spending signals.";
 }
 
 function renderInsights(analysis) {
@@ -274,8 +284,13 @@ function renderInsights(analysis) {
 }
 
 function renderCategoryBreakdown(analysis) {
-  const cards = Object.entries(analysis.categoryTotals)
-    .filter(([, spent]) => spent > 0)
+  const sourceEntries = analysis.hasTransactions
+    ? Object.entries(analysis.categoryTotals).filter(([, spent]) => spent > 0)
+    : Object.keys(categoryDetails)
+      .filter((category) => category !== "income")
+      .map((category) => [category, 0]);
+
+  const cards = sourceEntries
     .sort((a, b) => b[1] - a[1])
     .map(([category, spent]) => renderCategoryCard(category, spent, categoryDetails[category]?.budget || 100));
 
@@ -290,7 +305,10 @@ function renderTransactions() {
     const row = document.createElement("tr");
     const cell = document.createElement("td");
     cell.colSpan = 5;
-    cell.append(createEmptyState("No transactions match the current filters."));
+    const message = state.transactions.length
+      ? "No transactions match the current filters."
+      : "No transactions yet. Add your first income or expense to start the analysis.";
+    cell.append(createEmptyState(message));
     row.append(cell);
     elements.transactionBody.replaceChildren(row);
     return;
@@ -378,8 +396,17 @@ function buildWeeklyTotals(transactions) {
   return Array.from(buckets.values()).sort((a, b) => a.label.localeCompare(b.label));
 }
 
-function buildAlerts(categoryTotals, currentWeek, previousWeek, runway) {
+function buildAlerts(categoryTotals, currentWeek, previousWeek, runway, hasTransactions) {
   const alerts = [];
+
+  if (!hasTransactions) {
+    return [{
+      icon: "bi-pencil-square",
+      message: "Start with your current balance, weekly income, savings target, and first real transaction.",
+      title: "Add your own spending data",
+      tone: "success"
+    }];
+  }
 
   Object.entries(categoryTotals).forEach(([category, spent]) => {
     const budget = categoryDetails[category]?.budget || 0;
@@ -464,6 +491,13 @@ function compareCategoryWeeks(category) {
 }
 
 function predictRunway(expenseTotal) {
+  if (!state.transactions.length) {
+    return {
+      dailyBurn: 0,
+      days: null
+    };
+  }
+
   const dayCount = Math.max(getActiveDayCount(), 1);
   const dailySpend = expenseTotal / dayCount;
   const dailyIncome = state.settings.weeklyIncome / 7;
@@ -481,6 +515,18 @@ function predictRunway(expenseTotal) {
     dailyBurn,
     days: Math.max(Math.floor(state.settings.startingBalance / dailyBurn), 0)
   };
+}
+
+function formatRunway(analysis) {
+  if (!analysis.hasTransactions) {
+    return "Add data";
+  }
+
+  if (analysis.runway.days === Infinity) {
+    return "Stable";
+  }
+
+  return `${analysis.runway.days} days`;
 }
 
 function getActiveDayCount() {

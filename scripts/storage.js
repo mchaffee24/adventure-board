@@ -16,7 +16,7 @@ export function clearCurrentUser() {
 
 export function getSavedTransactions() {
   const saved = sessionStorage.getItem(TRANSACTION_KEY);
-  return saved ? JSON.parse(saved) : null;
+  return saved ? JSON.parse(saved) : [];
 }
 
 export function saveTransactions(transactions) {
@@ -24,7 +24,7 @@ export function saveTransactions(transactions) {
 }
 
 export function upsertTransaction(transaction) {
-  const transactions = getSavedTransactions() || [];
+  const transactions = getSavedTransactions();
   const index = transactions.findIndex((item) => item.id === transaction.id);
 
   if (index >= 0) {
@@ -38,21 +38,18 @@ export function upsertTransaction(transaction) {
 }
 
 export function removeTransaction(transactionId) {
-  const transactions = (getSavedTransactions() || []).filter((item) => item.id !== transactionId);
+  const transactions = getSavedTransactions().filter((item) => item.id !== transactionId);
   saveTransactions(transactions);
   return transactions;
 }
 
-export function getSettings() {
+export function getSettings(defaultSettings = {
+  startingBalance: 0,
+  weeklyIncome: 0,
+  weeklyGoal: 0
+}) {
   const saved = sessionStorage.getItem(SETTINGS_KEY);
-
-  return saved
-    ? JSON.parse(saved)
-    : {
-        startingBalance: 725,
-        weeklyIncome: 210,
-        weeklyGoal: 125
-      };
+  return saved ? JSON.parse(saved) : defaultSettings;
 }
 
 export function saveSettings(settings) {
