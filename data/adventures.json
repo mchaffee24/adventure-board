@@ -1,0 +1,90 @@
+[
+  {
+    "id": "riverwalk-reset",
+    "title": "Riverwalk Reset",
+    "location": "Florence, AL",
+    "category": "outdoors",
+    "difficulty": "easy",
+    "duration": 75,
+    "budget": 0,
+    "summary": "A low-cost walking loop with room for photos, water breaks, and a short reflection stop.",
+    "tags": ["walkable", "free", "fresh air"]
+  },
+  {
+    "id": "campus-hidden-history",
+    "title": "Campus Hidden History",
+    "location": "UNA campus",
+    "category": "campus",
+    "difficulty": "easy",
+    "duration": 60,
+    "budget": 0,
+    "summary": "A self-guided campus route that turns familiar buildings into a short research scavenger hunt.",
+    "tags": ["research", "campus", "quick"]
+  },
+  {
+    "id": "mural-photo-walk",
+    "title": "Mural Photo Walk",
+    "location": "Downtown Florence",
+    "category": "creative",
+    "difficulty": "easy",
+    "duration": 90,
+    "budget": 8,
+    "summary": "A creative route for collecting reference photos, color palettes, and composition ideas.",
+    "tags": ["arts", "photo", "downtown"]
+  },
+  {
+    "id": "coffee-code-sprint",
+    "title": "Coffee Code Sprint",
+    "location": "Local cafe",
+    "category": "food",
+    "difficulty": "easy",
+    "duration": 120,
+    "budget": 14,
+    "summary": "A focused two-hour work block with a drink budget, a short checklist, and one deliverable.",
+    "tags": ["focus", "food", "study"]
+  },
+  {
+    "id": "sunset-trail-notes",
+    "title": "Sunset Trail Notes",
+    "location": "Nearby trail",
+    "category": "outdoors",
+    "difficulty": "medium",
+    "duration": 150,
+    "budget": 5,
+    "summary": "A longer trail session for sketching, route notes, and a calmer end-of-day reset.",
+    "tags": ["trail", "notes", "sunset"]
+  },
+  {
+    "id": "maker-night",
+    "title": "Maker Night",
+    "location": "Shared workspace",
+    "category": "creative",
+    "difficulty": "medium",
+    "duration": 180,
+    "budget": 22,
+    "summary": "A hands-on build session for a small prototype, craft, or class demo artifact.",
+    "tags": ["prototype", "hands-on", "creative"]
+  },
+  {
+    "id": "budget-bites-tour",
+    "title": "Budget Bites Tour",
+    "location": "Downtown loop",
+    "category": "food",
+    "difficulty": "easy",
+    "duration": 105,
+    "budget": 28,
+    "summary": "A light food crawl planned around a strict budget and easy walking distances.",
+    "tags": ["food", "budget", "friends"]
+  },
+  {
+    "id": "service-hour-builder",
+    "title": "Service Hour Builder",
+    "location": "Community partner",
+    "category": "campus",
+    "difficulty": "medium",
+    "duration": 240,
+    "budget": 0,
+    "summary": "A planning block for finding, contacting, and completing a service opportunity.",
+    "tags": ["service", "planning", "campus"]
+  }
+]
