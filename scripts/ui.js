@@ -66,7 +66,7 @@ export function renderAlert(alert) {
   return item;
 }
 
-export function renderCategoryCard(category, spent, budget) {
+export function renderCategoryCard(category, spent, budget, targetPercent = 0) {
   const detail = categoryDetails[category] || {};
   const card = document.createElement("article");
   card.className = "category-card";
@@ -82,13 +82,14 @@ export function renderCategoryCard(category, spent, budget) {
   const bar = document.createElement("div");
   bar.className = "budget-track";
   const fill = document.createElement("span");
-  fill.style.width = `${Math.min((spent / budget) * 100, 100)}%`;
+  const progress = budget ? Math.min((spent / budget) * 100, 100) : 0;
+  fill.style.width = `${progress}%`;
   fill.style.background = detail.color || "#1f7a7a";
   bar.append(fill);
 
   const footer = document.createElement("p");
   const percent = budget ? Math.round((spent / budget) * 100) : 0;
-  footer.textContent = `${percent}% of ${formatCurrency(budget)} monthly budget`;
+  footer.textContent = `${percent}% of ${formatCurrency(budget)} monthly target (${targetPercent}%)`;
 
   card.append(header, bar, footer);
   return card;

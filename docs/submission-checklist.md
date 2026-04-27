@@ -15,7 +15,7 @@ Use this after pushing the project to GitHub.
 
 ### Spend Signal
 
-> A student budget dashboard that tracks spending categories, warning signals, charts, and cash runway.
+> A student budget dashboard with editable category targets, warning signals, charts, and cash runway.
 
 Repository: https://github.com/mchaffee24/adventure-board
 Live app: https://mchaffee24.github.io/adventure-board/
@@ -25,7 +25,7 @@ Live app: https://mchaffee24.github.io/adventure-board/
 
 - Add downloadable CSV and JSON export
 - Add recurring transaction templates
-- Add category budget editing controls
+- Add separate recommendation presets for students, commuters, and renters
 - Add month selector for older transaction sets
 - Add automated tests for forecast and alert helpers
 

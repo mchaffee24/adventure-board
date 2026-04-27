@@ -80,7 +80,7 @@
         <article class="metric-card">
           <span class="metric-icon metric-income" aria-hidden="true"><i class="bi bi-cash-stack"></i></span>
           <div>
-            <p>Tracked income</p>
+            <p>Monthly income basis</p>
             <strong id="monthly-income">$0.00</strong>
           </div>
         </article>
@@ -114,14 +114,37 @@
               <label for="starting-balance">Current balance</label>
               <input class="form-control" id="starting-balance" name="startingBalance" type="number" min="0" step="1" placeholder="Example: 500">
             </div>
-            <div class="form-field">
-              <label for="weekly-income">Weekly income</label>
-              <input class="form-control" id="weekly-income" name="weeklyIncome" type="number" min="0" step="1" placeholder="Example: 210">
+            <div class="form-split">
+              <div class="form-field">
+                <label for="income-amount">Income amount</label>
+                <input class="form-control" id="income-amount" name="incomeAmount" type="number" min="0" step="1" placeholder="Example: 420">
+              </div>
+              <div class="form-field">
+                <label for="income-frequency">Income schedule</label>
+                <select class="form-select" id="income-frequency" name="incomeFrequency">
+                  <option value="weekly">Weekly</option>
+                  <option value="biweekly">Bi-weekly</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="yearly">Yearly</option>
+                </select>
+              </div>
             </div>
             <div class="form-field">
-              <label for="weekly-goal">Weekly savings target</label>
-              <input class="form-control" id="weekly-goal" name="weeklyGoal" type="number" min="0" step="1" placeholder="Example: 125">
+              <label for="monthly-savings-goal">Monthly savings target</label>
+              <input class="form-control" id="monthly-savings-goal" name="monthlySavingsGoal" type="number" min="0" step="1" placeholder="Example: 250">
             </div>
+            <div class="budget-split-heading">
+              <div>
+                <h3>Category targets</h3>
+                <p id="budget-base-readout">$0.00 planning base</p>
+              </div>
+              <button class="btn btn-outline-secondary btn-sm" id="use-recommended" type="button">
+                <i class="bi bi-stars" aria-hidden="true"></i>
+                Recommended
+              </button>
+            </div>
+            <div class="percentage-grid" id="percentage-controls"></div>
+            <p class="percentage-total" id="percentage-total">0% assigned</p>
           </form>
 
           <div class="insight-list" id="insight-list" aria-live="polite"></div>

@@ -37,8 +37,10 @@ const state = {
   },
   settings: {
     startingBalance: 0,
-    weeklyIncome: 0,
-    weeklyGoal: 0
+    incomeAmount: 0,
+    incomeFrequency: "weekly",
+    monthlySavingsGoal: 0,
+    categoryPercents: {}
   }
 };
 
@@ -52,7 +54,8 @@ const elements = {
   filterForm: document.querySelector("#filter-form"),
   formCategory: document.querySelector("#transaction-category"),
   formType: document.querySelector("#transaction-type"),
-  incomeInput: document.querySelector("#weekly-income"),
+  incomeAmountInput: document.querySelector("#income-amount"),
+  incomeFrequencyInput: document.querySelector("#income-frequency"),
   insightList: document.querySelector("#insight-list"),
   jsonOutput: document.querySelector("#json-output"),
   loginForm: document.querySelector("#login-form"),
@@ -62,7 +65,7 @@ const elements = {
   monthlySpending: document.querySelector("#monthly-spending"),
   runway: document.querySelector("#runway"),
   saveButton: document.querySelector("#save-transaction"),
-  savingsGoalInput: document.querySelector("#weekly-goal"),
+  savingsGoalInput: document.querySelector("#monthly-savings-goal"),
   searchInput: document.querySelector("#search-input"),
   sessionStatus: document.querySelector("#session-status"),
   settingsForm: document.querySelector("#settings-form"),
@@ -71,6 +74,10 @@ const elements = {
   transactionForm: document.querySelector("#transaction-form"),
   trendChart: document.querySelector("#trend-chart"),
   typeFilter: document.querySelector("#type-filter"),
+  budgetBaseReadout: document.querySelector("#budget-base-readout"),
+  percentageControls: document.querySelector("#percentage-controls"),
+  percentageTotal: document.querySelector("#percentage-total"),
+  useRecommendedButton: document.querySelector("#use-recommended"),
   warningSummary: document.querySelector("#warning-summary")
 };
 
@@ -106,6 +113,7 @@ async function init() {
 
 function populateCategoryControls() {
   elements.formCategory.replaceChildren(...createCategoryOptions());
+  elements.percentageControls.replaceChildren(...createPercentageControls());
 
   Object.entries(categoryDetails)
     .filter(([category]) => category !== "income")
@@ -114,6 +122,42 @@ function populateCategoryControls() {
       option.value = category;
       option.textContent = detail.label;
       elements.categoryFilter.append(option);
+    });
+}
+
+function createPercentageControls() {
+  return Object.entries(categoryDetails)
+    .filter(([category]) => category !== "income")
+    .map(([category, detail]) => {
+      const wrapper = document.createElement("div");
+      wrapper.className = "percentage-field";
+
+      const label = document.createElement("label");
+      label.htmlFor = `percent-${category}`;
+      label.textContent = detail.label;
+
+      const inputGroup = document.createElement("div");
+      inputGroup.className = "input-group input-group-sm";
+
+      const input = document.createElement("input");
+      input.className = "form-control";
+      input.id = `percent-${category}`;
+      input.name = `percent-${category}`;
+      input.type = "number";
+      input.min = "0";
+      input.max = "100";
+      input.step = "1";
+      input.value = state.settings.categoryPercents[category] ?? detail.recommendedPercent ?? 0;
+      input.dataset.categoryPercent = category;
+      input.setAttribute("aria-label", `${detail.label} budget percentage`);
+
+      const suffix = document.createElement("span");
+      suffix.className = "input-group-text";
+      suffix.textContent = "%";
+
+      inputGroup.append(input, suffix);
+      wrapper.append(label, inputGroup);
+      return wrapper;
     });
 }
 
@@ -126,6 +170,7 @@ function bindEvents() {
   elements.transactionForm.addEventListener("submit", handleTransactionSubmit);
   elements.formType.addEventListener("change", handleTypeChange);
   elements.cancelEdit.addEventListener("click", resetTransactionForm);
+  elements.useRecommendedButton.addEventListener("click", applyRecommendedPercents);
   document.querySelector("#reset-filters").addEventListener("click", resetFilters);
   window.addEventListener("resize", () => renderCharts(buildAnalysis()));
 }
@@ -160,8 +205,10 @@ function updateSessionUi() {
 function handleSettings() {
   state.settings = {
     startingBalance: Number(elements.balanceInput.value),
-    weeklyIncome: Number(elements.incomeInput.value),
-    weeklyGoal: Number(elements.savingsGoalInput.value)
+    incomeAmount: Number(elements.incomeAmountInput.value),
+    incomeFrequency: elements.incomeFrequencyInput.value,
+    monthlySavingsGoal: Number(elements.savingsGoalInput.value),
+    categoryPercents: getCategoryPercentsFromForm()
   };
   saveSettings(state.settings);
   renderDashboard();
@@ -169,8 +216,16 @@ function handleSettings() {
 
 function applySettingsToForm() {
   elements.balanceInput.value = state.settings.startingBalance;
-  elements.incomeInput.value = state.settings.weeklyIncome;
-  elements.savingsGoalInput.value = state.settings.weeklyGoal;
+  elements.incomeAmountInput.value = state.settings.incomeAmount;
+  elements.incomeFrequencyInput.value = state.settings.incomeFrequency;
+  elements.savingsGoalInput.value = state.settings.monthlySavingsGoal;
+  Object.entries(state.settings.categoryPercents).forEach(([category, percent]) => {
+    const input = elements.percentageControls.querySelector(`[data-category-percent="${category}"]`);
+
+    if (input) {
+      input.value = percent;
+    }
+  });
 }
 
 function handleFilters() {
@@ -245,21 +300,31 @@ function buildAnalysis() {
   const income = state.transactions.filter((transaction) => transaction.type === "income");
   const expenseTotal = sumTransactions(expenses);
   const incomeTotal = sumTransactions(income);
-  const net = incomeTotal - expenseTotal;
+  const expectedMonthlyIncome = getMonthlyIncome();
+  const incomeBasis = expectedMonthlyIncome || incomeTotal;
+  const net = incomeBasis - expenseTotal;
+  const budgetBase = getBudgetBase(expectedMonthlyIncome);
+  const categoryBudgets = buildCategoryBudgets(budgetBase);
+  const assignedPercent = getAssignedPercent();
   const categoryTotals = buildCategoryTotals(expenses);
   const weeklyTotals = buildWeeklyTotals(state.transactions);
   const currentWeek = weeklyTotals.at(-1);
   const previousWeek = weeklyTotals.at(-2);
-  const runway = predictRunway(expenseTotal);
+  const runway = predictRunway(expenseTotal, incomeTotal);
   const hasTransactions = state.transactions.length > 0;
-  const alerts = buildAlerts(categoryTotals, currentWeek, previousWeek, runway, hasTransactions);
+  const alerts = buildAlerts(categoryTotals, currentWeek, previousWeek, runway, hasTransactions, categoryBudgets, assignedPercent);
 
   return {
     alerts,
     categoryTotals,
     expenseTotal,
+    expectedMonthlyIncome,
     hasTransactions,
+    incomeBasis,
     incomeTotal,
+    categoryBudgets,
+    budgetBase,
+    assignedPercent,
     net,
     runway,
     weeklyTotals
@@ -268,10 +333,13 @@ function buildAnalysis() {
 
 function renderSummary(analysis) {
   elements.monthlySpending.textContent = formatCurrency(analysis.expenseTotal);
-  elements.monthlyIncome.textContent = formatCurrency(analysis.incomeTotal);
+  elements.monthlyIncome.textContent = formatCurrency(analysis.incomeBasis);
   elements.monthlyNet.textContent = formatCurrency(analysis.net);
   elements.runway.textContent = formatRunway(analysis);
   elements.warningSummary.textContent = analysis.alerts[0]?.message || "Add your first transaction to unlock spending signals.";
+  elements.budgetBaseReadout.textContent = `${formatCurrency(analysis.budgetBase)} monthly planning base`;
+  elements.percentageTotal.textContent = `${formatPercent(analysis.assignedPercent)} assigned`;
+  elements.percentageTotal.classList.toggle("is-over", analysis.assignedPercent > 100);
 }
 
 function renderInsights(analysis) {
@@ -292,7 +360,12 @@ function renderCategoryBreakdown(analysis) {
 
   const cards = sourceEntries
     .sort((a, b) => b[1] - a[1])
-    .map(([category, spent]) => renderCategoryCard(category, spent, categoryDetails[category]?.budget || 100));
+    .map(([category, spent]) => renderCategoryCard(
+      category,
+      spent,
+      analysis.categoryBudgets[category] || 0,
+      state.settings.categoryPercents[category] || 0
+    ));
 
   elements.categoryBreakdown.replaceChildren(...cards);
 }
@@ -396,20 +469,29 @@ function buildWeeklyTotals(transactions) {
   return Array.from(buckets.values()).sort((a, b) => a.label.localeCompare(b.label));
 }
 
-function buildAlerts(categoryTotals, currentWeek, previousWeek, runway, hasTransactions) {
+function buildAlerts(categoryTotals, currentWeek, previousWeek, runway, hasTransactions, categoryBudgets, assignedPercent) {
   const alerts = [];
 
   if (!hasTransactions) {
     return [{
       icon: "bi-pencil-square",
-      message: "Start with your current balance, weekly income, savings target, and first real transaction.",
+      message: "Start with your current balance, income schedule, category targets, and first real transaction.",
       title: "Add your own spending data",
       tone: "success"
     }];
   }
 
+  if (assignedPercent > 100) {
+    alerts.push({
+      icon: "bi-pie-chart",
+      message: `Your category targets add up to ${formatPercent(assignedPercent)}, which is more than your planning base.`,
+      title: "Category targets exceed income",
+      tone: "warning"
+    });
+  }
+
   Object.entries(categoryTotals).forEach(([category, spent]) => {
-    const budget = categoryDetails[category]?.budget || 0;
+    const budget = categoryBudgets[category] || 0;
 
     if (budget && spent > budget) {
       alerts.push({
@@ -490,7 +572,7 @@ function compareCategoryWeeks(category) {
   return previousTotal ? ((currentTotal - previousTotal) / previousTotal) * 100 : 0;
 }
 
-function predictRunway(expenseTotal) {
+function predictRunway(expenseTotal, incomeTotal) {
   if (!state.transactions.length) {
     return {
       dailyBurn: 0,
@@ -500,8 +582,8 @@ function predictRunway(expenseTotal) {
 
   const dayCount = Math.max(getActiveDayCount(), 1);
   const dailySpend = expenseTotal / dayCount;
-  const dailyIncome = state.settings.weeklyIncome / 7;
-  const dailyGoal = state.settings.weeklyGoal / 7;
+  const dailyIncome = (getMonthlyIncome() || incomeTotal) * 12 / 365;
+  const dailyGoal = state.settings.monthlySavingsGoal * 12 / 365;
   const dailyBurn = dailySpend + dailyGoal - dailyIncome;
 
   if (dailyBurn <= 0) {
@@ -551,4 +633,54 @@ function getWeekLabel(dateString) {
 
 function sumTransactions(transactions) {
   return transactions.reduce((sum, transaction) => sum + Number(transaction.amount), 0);
+}
+
+function getMonthlyIncome() {
+  const multipliers = {
+    weekly: 52 / 12,
+    biweekly: 26 / 12,
+    monthly: 1,
+    yearly: 1 / 12
+  };
+
+  return Number(state.settings.incomeAmount) * (multipliers[state.settings.incomeFrequency] || 1);
+}
+
+function getBudgetBase(monthlyIncome) {
+  return monthlyIncome > 0 ? monthlyIncome : Number(state.settings.startingBalance);
+}
+
+function getAssignedPercent() {
+  return Object.values(state.settings.categoryPercents)
+    .reduce((total, percent) => total + Number(percent), 0);
+}
+
+function getCategoryPercentsFromForm() {
+  return Array.from(elements.percentageControls.querySelectorAll("[data-category-percent]"))
+    .reduce((percents, input) => {
+      percents[input.dataset.categoryPercent] = Number(input.value);
+      return percents;
+    }, {});
+}
+
+function buildCategoryBudgets(budgetBase) {
+  return Object.entries(state.settings.categoryPercents)
+    .reduce((budgets, [category, percent]) => {
+      budgets[category] = budgetBase * (Number(percent) / 100);
+      return budgets;
+    }, {});
+}
+
+function applyRecommendedPercents() {
+  Object.entries(categoryDetails)
+    .filter(([category]) => category !== "income")
+    .forEach(([category, detail]) => {
+      const input = elements.percentageControls.querySelector(`[data-category-percent="${category}"]`);
+
+      if (input) {
+        input.value = detail.recommendedPercent || 0;
+      }
+    });
+
+  handleSettings();
 }

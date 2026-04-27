@@ -45,11 +45,30 @@ export function removeTransaction(transactionId) {
 
 export function getSettings(defaultSettings = {
   startingBalance: 0,
-  weeklyIncome: 0,
-  weeklyGoal: 0
+  incomeAmount: 0,
+  incomeFrequency: "weekly",
+  monthlySavingsGoal: 0,
+  categoryPercents: {}
 }) {
   const saved = sessionStorage.getItem(SETTINGS_KEY);
-  return saved ? JSON.parse(saved) : defaultSettings;
+
+  if (!saved) {
+    return defaultSettings;
+  }
+
+  const parsed = JSON.parse(saved);
+
+  return {
+    ...defaultSettings,
+    ...parsed,
+    incomeAmount: parsed.incomeAmount ?? parsed.weeklyIncome ?? defaultSettings.incomeAmount,
+    incomeFrequency: parsed.incomeFrequency ?? "weekly",
+    monthlySavingsGoal: parsed.monthlySavingsGoal ?? parsed.weeklyGoal ?? defaultSettings.monthlySavingsGoal,
+    categoryPercents: {
+      ...defaultSettings.categoryPercents,
+      ...(parsed.categoryPercents || {})
+    }
+  };
 }
 
 export function saveSettings(settings) {

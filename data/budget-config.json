@@ -1,63 +1,74 @@
 {
   "defaultSettings": {
     "startingBalance": 0,
-    "weeklyIncome": 0,
-    "weeklyGoal": 0
+    "incomeAmount": 0,
+    "incomeFrequency": "weekly",
+    "monthlySavingsGoal": 0,
+    "categoryPercents": {
+      "bills": 30,
+      "groceries": 14,
+      "food": 10,
+      "gas": 8,
+      "transportation": 8,
+      "school": 6,
+      "health": 5,
+      "entertainment": 5
+    }
   },
   "categories": {
     "bills": {
       "label": "Bills",
       "icon": "bi-receipt",
       "color": "#4169a8",
-      "budget": 220
+      "recommendedPercent": 30
     },
     "entertainment": {
       "label": "Entertainment",
       "icon": "bi-controller",
       "color": "#b14d8d",
-      "budget": 90
+      "recommendedPercent": 5
     },
     "food": {
       "label": "Food",
       "icon": "bi-cup-hot",
       "color": "#d95f43",
-      "budget": 160
+      "recommendedPercent": 10
     },
     "gas": {
       "label": "Gas",
       "icon": "bi-fuel-pump",
       "color": "#d8a12d",
-      "budget": 130
+      "recommendedPercent": 8
     },
     "groceries": {
       "label": "Groceries",
       "icon": "bi-basket",
       "color": "#4f7f52",
-      "budget": 240
+      "recommendedPercent": 14
     },
     "health": {
       "label": "Health",
       "icon": "bi-heart-pulse",
       "color": "#1f7a7a",
-      "budget": 80
+      "recommendedPercent": 5
     },
     "income": {
       "label": "Income",
       "icon": "bi-cash-stack",
       "color": "#2f8a5b",
-      "budget": 0
+      "recommendedPercent": 0
     },
     "school": {
       "label": "School",
       "icon": "bi-mortarboard",
       "color": "#7057b8",
-      "budget": 100
+      "recommendedPercent": 6
     },
     "transportation": {
       "label": "Transportation",
       "icon": "bi-car-front",
       "color": "#59738f",
-      "budget": 110
+      "recommendedPercent": 8
     }
   }
 }

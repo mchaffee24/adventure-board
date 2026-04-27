@@ -1,6 +1,6 @@
 # Spend Signal
 
-> A student budget dashboard that tracks spending, warnings, charts, and cash runway.
+> A student budget dashboard with editable category targets, warnings, charts, and cash runway.
 
 ## Author
 
@@ -9,14 +9,14 @@ Mitchell Chaffee - [GitHub profile](https://github.com/mchaffee24)
 ## User Story
 
 - *As a(n)* student managing a limited budget
-- *I want* to track spending by category and see warning signals
+- *I want* to track spending by category and set budget targets from my income
 - *So that* I can adjust habits before I run out of money
 
 ## Narrative
 
-Spend Signal is a front-end spending analyzer for tracking everyday transactions. It starts with no personal spending history, loads neutral category configuration from JSON, stores user-entered changes in `sessionStorage`, lets the user add/edit/delete transactions, filters the ledger, and displays category charts, budget warnings, and a runway forecast.
+Spend Signal is a front-end spending analyzer for tracking everyday transactions. It starts with no personal spending history, loads neutral category recommendations from JSON, stores user-entered changes in `sessionStorage`, lets the user add/edit/delete transactions, filters the ledger, and displays category charts, budget warnings, and a runway forecast.
 
-I chose this direction because a budget app feels practical while still giving the interface room to do meaningful work. The app does more than show static content: it calculates spending patterns, compares weeks, and packages new form data as JSON.
+I chose this direction because a budget app feels practical while still giving the interface room to do meaningful work. The app does more than show static content: it normalizes weekly, bi-weekly, monthly, or yearly income into a monthly planning base, lets users adjust category percentages, calculates spending patterns, compares weeks, and packages new form data as JSON.
 
 The development story focused on clarity over size. I built the app as a static deployment with separate JavaScript modules for data, storage, UI rendering, and app logic. The charts are drawn with canvas so the project demonstrates custom DOM and visual logic without needing a heavy chart library.
 
@@ -53,7 +53,7 @@ The development story focused on clarity over size. I built the app as a static 
 ## Code Highlight
 
 ```js
-function predictRunway(expenseTotal) {
+function predictRunway(expenseTotal, incomeTotal) {
   if (!state.transactions.length) {
     return {
       dailyBurn: 0,
@@ -63,8 +63,8 @@ function predictRunway(expenseTotal) {
 
   const dayCount = Math.max(getActiveDayCount(), 1);
   const dailySpend = expenseTotal / dayCount;
-  const dailyIncome = state.settings.weeklyIncome / 7;
-  const dailyGoal = state.settings.weeklyGoal / 7;
+  const dailyIncome = (getMonthlyIncome() || incomeTotal) * 12 / 365;
+  const dailyGoal = state.settings.monthlySavingsGoal * 12 / 365;
   const dailyBurn = dailySpend + dailyGoal - dailyIncome;
 
   if (dailyBurn <= 0) {
@@ -81,7 +81,7 @@ function predictRunway(expenseTotal) {
 }
 ```
 
-This function matters because it turns user-entered transaction history and settings into a real forecast. It waits until the user has entered spending data, estimates daily spending, subtracts daily income, includes the savings target, and predicts how many days the current balance can last. If income covers spending and the savings target, it reports a stable runway instead of a countdown.
+This function matters because it turns user-entered transaction history and settings into a real forecast. It waits until the user has entered spending data, estimates daily spending, normalizes the selected income schedule into daily income, includes the monthly savings target, and predicts how many days the current balance can last. If income covers spending and the savings target, it reports a stable runway instead of a countdown.
 
 ## Validation
 
@@ -96,7 +96,7 @@ Planned issues for Sprint 99:
 
 - Add downloadable CSV and JSON export
 - Add recurring transaction templates
-- Add category budget editing controls
+- Add separate recommendation presets for students, commuters, and renters
 - Add month selector for older transaction sets
 - Add automated tests for forecast and alert helpers
 
