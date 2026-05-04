@@ -70,37 +70,37 @@
       </section>
 
       <section class="metric-grid" aria-label="Budget summary">
-        <article class="metric-card">
+        <div class="metric-card">
           <span class="metric-icon metric-spend" aria-hidden="true"><i class="bi bi-credit-card"></i></span>
           <div>
             <p>Monthly spending</p>
             <strong id="monthly-spending">$0.00</strong>
           </div>
-        </article>
-        <article class="metric-card">
+        </div>
+        <div class="metric-card">
           <span class="metric-icon metric-income" aria-hidden="true"><i class="bi bi-cash-stack"></i></span>
           <div>
             <p>Monthly income basis</p>
             <strong id="monthly-income">$0.00</strong>
           </div>
-        </article>
-        <article class="metric-card">
+        </div>
+        <div class="metric-card">
           <span class="metric-icon metric-net" aria-hidden="true"><i class="bi bi-bank"></i></span>
           <div>
             <p>Net cash flow</p>
             <strong id="monthly-net">$0.00</strong>
           </div>
-        </article>
-        <article class="metric-card">
+        </div>
+        <div class="metric-card">
           <span class="metric-icon metric-runway" aria-hidden="true"><i class="bi bi-hourglass-split"></i></span>
           <div>
             <p>Cash runway</p>
             <strong id="runway">Stable</strong>
           </div>
-        </article>
+        </div>
       </section>
 
-      <section class="dashboard-grid">
+      <div class="dashboard-grid">
         <aside class="settings-panel panel" aria-labelledby="settings-title">
           <div class="panel-heading">
             <div>
@@ -169,7 +169,7 @@
             </figure>
           </div>
 
-          <div class="category-breakdown" id="category-breakdown" aria-label="Category budget progress"></div>
+          <div class="category-breakdown" id="category-breakdown" role="region" aria-label="Category budget progress"></div>
         </section>
 
         <aside class="entry-panel panel" aria-labelledby="entry-title">
@@ -222,12 +222,12 @@
             </div>
           </form>
 
-          <div class="json-panel" aria-labelledby="json-title">
+          <div class="json-panel" role="region" aria-labelledby="json-title">
             <h3 id="json-title">Packaged JSON</h3>
             <pre id="json-output">{}</pre>
           </div>
         </aside>
-      </section>
+      </div>
 
       <section class="transactions-panel panel" aria-labelledby="transactions-title">
         <div class="transactions-toolbar">
