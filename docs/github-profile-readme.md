@@ -15,8 +15,9 @@ Add a `README.md` file with this featured project section:
 
 > A student budget dashboard with editable category targets, warning signals, charts, and cash runway.
 
-Repository: https://github.com/mchaffee24/adventure-board
-Live app: https://mchaffee24.github.io/adventure-board/
+Repository: https://github.com/mchaffee24/finance-tracker
+Live app: https://mchaffee24.github.io/finance-tracker/
+GCP deployment: http://34.41.255.130/
 ```
 
 For the networking bonus, add your LinkedIn profile link:

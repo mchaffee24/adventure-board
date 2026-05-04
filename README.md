@@ -85,12 +85,12 @@ This function matters because it turns user-entered transaction history and sett
 
 ## Validation
 
-- Nu Validator: https://validator.w3.org/nu/?doc=https%3A%2F%2Fmchaffee24.github.io%2Fadventure-board%2F
-- WAVE accessibility report: https://wave.webaim.org/report#/https://mchaffee24.github.io/adventure-board/
+- Nu Validator: https://validator.w3.org/nu/?doc=https%3A%2F%2Fmchaffee24.github.io%2Ffinance-tracker%2F
+- WAVE accessibility report: https://wave.webaim.org/report#/https://mchaffee24.github.io/finance-tracker/
 
 ## Future Improvements
 
-Sprint 99 milestone: https://github.com/mchaffee24/adventure-board/milestone/1
+Sprint 99 milestone: https://github.com/mchaffee24/finance-tracker/milestone/1
 
 Planned issues for Sprint 99:
 
@@ -104,11 +104,11 @@ Each issue should be assigned to Mitchell Chaffee and include a short descriptio
 
 ## Deployment Notes
 
-- Repository: https://github.com/mchaffee24/adventure-board
-- GitHub Pages app: https://mchaffee24.github.io/adventure-board/
-- GCP external IP app: http://YOUR-GCP-EXTERNAL-IP/
+- Repository: https://github.com/mchaffee24/finance-tracker
+- GitHub Pages app: https://mchaffee24.github.io/finance-tracker/
+- GCP external IP app: http://34.41.255.130/
 
-Add both deployed links to the repository About section. The repo name can stay `adventure-board` for this submission or be renamed later.
+Add both deployed links to the repository About section.
 
 ## Demo Login
 

@@ -5,7 +5,7 @@ Use this after pushing the project to GitHub.
 ## Repository About
 
 - Add the GitHub Pages URL.
-- Add the GCP external IP URL.
+- Add the GCP external IP URL: `http://34.41.255.130/`
 - Add topics such as `front-end`, `javascript`, `bootstrap`, `github-pages`, and `gcp`.
 
 ## GitHub Profile README
@@ -17,8 +17,9 @@ Use this after pushing the project to GitHub.
 
 > A student budget dashboard with editable category targets, warning signals, charts, and cash runway.
 
-Repository: https://github.com/mchaffee24/adventure-board
-Live app: https://mchaffee24.github.io/adventure-board/
+Repository: https://github.com/mchaffee24/finance-tracker
+Live app: https://mchaffee24.github.io/finance-tracker/
+GCP deployment: http://34.41.255.130/
 ```
 
 ## Sprint 99 Milestone Ideas
@@ -31,5 +32,5 @@ Live app: https://mchaffee24.github.io/adventure-board/
 
 ## Validation Links
 
-- Nu Validator: https://validator.w3.org/nu/?doc=https%3A%2F%2Fmchaffee24.github.io%2Fadventure-board%2F
-- WAVE: https://wave.webaim.org/report#/https://mchaffee24.github.io/adventure-board/
+- Nu Validator: https://validator.w3.org/nu/?doc=https%3A%2F%2Fmchaffee24.github.io%2Ffinance-tracker%2F
+- WAVE: https://wave.webaim.org/report#/https://mchaffee24.github.io/finance-tracker/
